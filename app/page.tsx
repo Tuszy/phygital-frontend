@@ -10,6 +10,8 @@ export default function Home() {
         height={500}
         alt="Phygital logo"
         className="m-12 px-16"
+        priority={true}
+        loading="eager"
       />
       <div className="grid place-content-center flex-1 w-full">
         <LoginButton />
