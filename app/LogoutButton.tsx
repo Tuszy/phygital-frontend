@@ -10,7 +10,7 @@ import EthersContext from "@/context/EthersContext/EthersContext";
 const LogoutButton = function () {
   const { logout } = useContext(EthersContext);
 
-  return <Button onClick={logout}>Login with Universal Profile</Button>;
+  return <Button onClick={async () => logout()}>Logout</Button>;
 };
 
 export default LogoutButton;

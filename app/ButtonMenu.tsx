@@ -7,6 +7,7 @@ import EthersContext from "@/context/EthersContext/EthersContext";
 // UI
 import LoginButton from "./LoginButton";
 import SetPermissionsButton from "./SetPermissionsButton";
+import LogoutButton from "./LogoutButton";
 
 export default function ButtonMenu() {
   const { universalProfile } = useContext(EthersContext);
@@ -16,7 +17,10 @@ export default function ButtonMenu() {
       {!Boolean(universalProfile) ? (
         <LoginButton />
       ) : (
-        <>{!universalProfile?.hasPermissions && <SetPermissionsButton />}</>
+        <>
+          {!universalProfile?.hasPermissions && <SetPermissionsButton />}
+          <LogoutButton />
+        </>
       )}
     </div>
   );

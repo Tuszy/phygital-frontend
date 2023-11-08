@@ -143,7 +143,7 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
     setLoading(false);
   };
 
-  const logout = () => setUniversalProfile(null);
+  const logout = async () => setUniversalProfile(null);
 
   useEffect(() => {
     if (!provider.current) {
