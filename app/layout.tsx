@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ToastContainer } from "react-toastify";
 import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
+
+// Ethers
+import EthersContextProvider from "@/context/EthersContext/EthersContextProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +22,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ToastContainer theme="colored" autoClose={10000} />
+        <EthersContextProvider>{children}</EthersContextProvider>
+      </body>
     </html>
   );
 }
