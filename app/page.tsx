@@ -3,7 +3,7 @@ import LoginButton from "./LoginButton";
 
 export default function Home() {
   return (
-    <main className="min-h-screen w-full flex flex-col items-center justify-start bg-[url('/background.svg')] bg-no-repeat bg-top">
+    <main className="[min-height:100dvh] w-full flex flex-col items-center justify-start bg-[url('/background.svg')] bg-no-repeat bg-top">
       <Image
         src="/logo.png"
         width={500}
@@ -13,7 +13,7 @@ export default function Home() {
         priority={true}
         loading="eager"
       />
-      <div className="grid place-content-center flex-1 w-full">
+      <div className="mt-16 flex items-start sm:mt-0 sm:items-center justify-center flex-1 w-full pb-24">
         <LoginButton />
       </div>
     </main>
