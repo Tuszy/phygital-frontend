@@ -1,4 +1,5 @@
 import Image from "next/image";
+import LoginButton from "./LoginButton";
 
 export default function Home() {
   return (
@@ -10,7 +11,9 @@ export default function Home() {
         alt="Phygital logo"
         className="m-12 px-16"
       />
-      <div className="grid place-content-center flex-1 w-full"></div>
+      <div className="grid place-content-center flex-1 w-full">
+        <LoginButton />
+      </div>
     </main>
   );
 }
