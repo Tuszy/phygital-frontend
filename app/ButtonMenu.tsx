@@ -13,7 +13,7 @@ export default function ButtonMenu() {
   const { universalProfile } = useContext(EthersContext);
 
   return (
-    <div className="mt-16 flex items-start sm:mt-0 sm:items-center justify-center flex-1 w-full pb-24">
+    <div className="mt-16 flex flex-col gap-12 items-start sm:mt-0 sm:items-center justify-center flex-1 w-full pb-24 px-12">
       {!Boolean(universalProfile) ? (
         <LoginButton />
       ) : (

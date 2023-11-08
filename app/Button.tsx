@@ -36,11 +36,12 @@ const Button = function ({
       disabled={!isClickable}
       aria-disabled={!isClickable}
       className={
-        "drop-shadow-[0_0_12px_#00ffff] flex cursor-default items-center justify-center overflow-hidden rounded-lg shadow-black ring-4 ring-offset-2 mx-12 p-4 bg-[#0ff4] ring-slate-400 " +
+        "drop-shadow-[0_0_12px_#00ffff] w-full flex cursor-default items-center justify-center overflow-hidden rounded-lg shadow-black ring-4 ring-offset-2 p-4 bg-[#0ff4] ring-slate-400 max-w-2xl backdrop-blur-sm " +
         (className ?? "") +
         (isClickable
-          ? "bg-[#0ff6] hover:bg-[#0ff8] active:opacity-[0.9] cursor-pointer"
-          : "")
+          ? "hover:bg-[#0ff5] active:opacity-[0.9] cursor-pointer "
+          : "") +
+        (!busy && loading ? "bg-[#0004] opacity-[0.6] blur-[1px]" : "")
       }
       onClick={click}
     >

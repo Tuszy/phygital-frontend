@@ -139,6 +139,8 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
     setLoading(true);
     if (!(await universalProfile?.setNecessaryPermissions())) {
       showError("Failed to set the necessary permissions.");
+    } else {
+      toast.success("Successfully set the necessary permissions.");
     }
     setLoading(false);
   };

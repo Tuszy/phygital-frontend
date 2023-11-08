@@ -53,26 +53,28 @@ export class UniversalProfile {
       const allowedCall = ((data[1] as string) ?? "").toLowerCase();
       this._hasPermissions =
         decodedPermissions.CALL && permissionData.values[1] === allowedCall;
-      return this._hasPermissions;
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+      this._hasPermissions = false;
+    }
 
-    this._hasPermissions = false;
-
-    return false;
+    return this._hasPermissions;
   }
 
   public async setNecessaryPermissions() {
     try {
       const tx = await this._up["setDataBatch(bytes32[],bytes[])"](
         permissionData.keys,
-        permissionData.values,
-        { gasLimit: 3000000 }
+        permissionData.values
       );
-      await tx.wait();
-      this._hasPermissions = true;
-      return true;
+
+      await this.signer.provider?.waitForTransaction(tx.hash);
+      this._hasPermissions = await this.hasNecessaryPermissions();
+
+      return this._hasPermissions;
     } catch (e) {
       console.error(e);
+      if (await this.hasNecessaryPermissions()) return true;
     }
     return false;
   }
