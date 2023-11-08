@@ -23,7 +23,6 @@ export class UniversalProfileExtension extends BrowserProvider {
     method: string;
     params: Array<any>;
   }): Promise<any> {
-    console.log(method, params);
     return super.send(method, params);
   }
 }

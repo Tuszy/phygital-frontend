@@ -8,12 +8,13 @@ import { useContext } from "react";
 import EthersContext from "@/context/EthersContext/EthersContext";
 
 const LoginButton = function () {
-  const ethersContext = useContext(EthersContext);
-  const onClick = () => {
-    ethersContext.connectUniversalProfile();
-  };
+  const { connectUniversalProfile } = useContext(EthersContext);
 
-  return <Button onClick={onClick}>Login with Universal Profile</Button>;
+  return (
+    <Button onClick={connectUniversalProfile}>
+      Login with Universal Profile
+    </Button>
+  );
 };
 
 export default LoginButton;

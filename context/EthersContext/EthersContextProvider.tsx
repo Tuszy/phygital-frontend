@@ -28,6 +28,9 @@ import { UniversalProfileExtension } from "@/util/UniversalProfileExtension";
 // Universal Profile
 import { UniversalProfile } from "@/util/UniversalProfile";
 
+const UP_BROWSER_EXTENSION_URL =
+  "https://docs.lukso.tech/guides/browser-extension/install-browser-extension/";
+
 // Context Provider
 const EthersContextProvider = ({ children }: PropsWithChildren) => {
   const provider = useRef<null | UniversalProfileExtension>(null);
@@ -55,7 +58,7 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
     const signer = await provider.current.getSigner();
     const universalProfileAddress = await signer.getAddress();
     let universalProfile = new UniversalProfile(
-      signer.provider,
+      signer,
       universalProfileAddress
     );
 
@@ -68,17 +71,10 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
         e.message
       );
       showError(
-        <>
+        <a href={UP_BROWSER_EXTENSION_URL} target="_blank">
           Fetching universal profile data for {universalProfileAddress} failed.
-          Please make sure that you are using the{" "}
-          <a
-            href="https://docs.lukso.tech/guides/browser-extension/install-browser-extension/"
-            target="_blank"
-            style={{ color: "white" }}
-          >
-            Lukso UP browser extension
-          </a>
-        </>
+          Please make sure that you are using the Lukso UP browser extension.
+        </a>
       );
       return;
     }
@@ -104,22 +100,13 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   const connectUniversalProfile = async () => {
-    if (!provider.current) return;
     if (loading) return;
 
-    if (!provider.current?.isUniversalProfileExtension()) {
+    if (!provider.current || !provider.current?.isUniversalProfileExtension()) {
       showError(
-        <>
-          We are sorry, but this DApp only supports the Lukso UP browser
-          extension.{" "}
-          <a
-            href="https://docs.lukso.tech/guides/browser-extension/install-browser-extension/"
-            target="_blank"
-            style={{ color: "white" }}
-          >
-            Download here
-          </a>
-        </>
+        <a href={UP_BROWSER_EXTENSION_URL} target="_blank">
+          Please download the Lukso UP browser extension.
+        </a>
       );
       return;
     }
@@ -146,6 +133,16 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
+  const setPermissions = async () => {
+    if (!provider.current || !universalProfile || loading) return;
+
+    setLoading(true);
+    if (!(await universalProfile?.setNecessaryPermissions())) {
+      showError("Failed to set the necessary permissions.");
+    }
+    setLoading(false);
+  };
+
   const logout = () => setUniversalProfile(null);
 
   useEffect(() => {
@@ -166,6 +163,7 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
       provider: provider.current,
       universalProfile,
       connectUniversalProfile,
+      setPermissions,
       logout,
       loading,
     }),

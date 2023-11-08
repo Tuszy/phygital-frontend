@@ -1,5 +1,8 @@
+// Next
 import Image from "next/image";
-import LoginButton from "./LoginButton";
+
+// UI
+import ButtonMenu from "./ButtonMenu";
 
 export default function Home() {
   return (
@@ -13,9 +16,7 @@ export default function Home() {
         priority={true}
         loading="eager"
       />
-      <div className="mt-16 flex items-start sm:mt-0 sm:items-center justify-center flex-1 w-full pb-24">
-        <LoginButton />
-      </div>
+      <ButtonMenu />
     </main>
   );
 }

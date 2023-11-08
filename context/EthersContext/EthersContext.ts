@@ -13,6 +13,7 @@ export interface EthersContextValue {
   provider: null | ethers.BrowserProvider;
   universalProfile: null | UniversalProfile;
   connectUniversalProfile: () => void;
+  setPermissions: () => void;
   logout: () => void;
   loading: boolean;
 }
@@ -21,6 +22,7 @@ const EthersContext = createContext<EthersContextValue>({
   provider: null,
   universalProfile: null,
   connectUniversalProfile: () => {},
+  setPermissions: () => {},
   logout: () => {},
   loading: false,
 });
