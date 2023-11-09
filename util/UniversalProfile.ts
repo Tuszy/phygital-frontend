@@ -16,6 +16,7 @@ export class UniversalProfile {
   private _up: Contract;
   private _erc725: ERC725;
   private _hasPermissions: boolean = false;
+  private _upData?: Record<string, any>;
   constructor(private signer: Signer, private universalProfileAddress: string) {
     this._up = new Contract(
       this.universalProfileAddress,
@@ -42,6 +43,35 @@ export class UniversalProfile {
     );
 
     this._hasPermissions = await this.hasNecessaryPermissions();
+
+    try {
+      const { value } = await this._erc725.fetchData("LSP3Profile");
+      this._upData =
+        value instanceof Object && "LSP3Profile" in value
+          ? value.LSP3Profile
+          : undefined;
+
+      if (this._upData?.profileImage?.length > 0) {
+        this._upData!.profileImage = this._upData?.profileImage.map(
+          (image: { url: string }) => ({
+            ...image,
+            url: getURLWithIPFSGateway(image.url),
+          })
+        );
+      }
+
+      if (this._upData?.backgroundImage?.length > 0) {
+        this._upData!.backgroundImage = this._upData?.backgroundImage.map(
+          (image: { url: string }) => ({
+            ...image,
+            url: getURLWithIPFSGateway(image.url),
+          })
+        );
+      }
+    } catch (e) {
+      this._upData = undefined;
+      console.error("Failed to fetch LSP3Profile", e);
+    }
   }
 
   public async hasNecessaryPermissions() {
@@ -79,7 +109,20 @@ export class UniversalProfile {
     return false;
   }
 
-  public address() {
+  public get address() {
     return this.universalProfileAddress;
   }
+
+  public get nameWithAddress() {
+    return `@${
+      this._upData?.name || "ANONYMOUS"
+    }#${this.universalProfileAddress.substring(2, 6)}`;
+  }
+
+  public get data() {
+    return this._upData;
+  }
 }
+
+const getURLWithIPFSGateway = (ipfsURL: string): string =>
+  `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/${ipfsURL.replace("ipfs://", "")}`;
