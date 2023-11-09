@@ -46,6 +46,7 @@ export const permissionData = KeyManagerERC725.encodeData([
   {
     keyName: "AddressPermissions:AllowedCalls:<address>",
     dynamicKeyParts: controllerKey,
+    // @ts-ignore
     value: allowedCallPermission,
   },
 ]);
