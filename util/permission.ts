@@ -1,7 +1,7 @@
 // Interfaces
 import {
   PhygitalAssetInterface,
-  interfaceIdOfPhygitalAsset,
+  INTERFACE_ID_OF_PHYGITAL_ASSET,
 } from "./Interfaces";
 
 // ERC725
@@ -25,20 +25,20 @@ const allowedCallPermission = [
   [
     restrictCallOperation,
     allowCallingAnyContractInstance,
-    interfaceIdOfPhygitalAsset, // contract must support the PhygitalAsset interface
+    INTERFACE_ID_OF_PHYGITAL_ASSET, // contract must support the PhygitalAsset interface
     PhygitalAssetInterface.getFunction("mint")!.selector, // allow calling the 'mint' function
   ],
   [
     restrictCallOperation,
     allowCallingAnyContractInstance,
-    interfaceIdOfPhygitalAsset, // contract must support the PhygitalAsset interface
+    INTERFACE_ID_OF_PHYGITAL_ASSET, // contract must support the PhygitalAsset interface
     PhygitalAssetInterface.getFunction("verifyOwnershipAfterTransfer")!
       .selector, // allow calling the 'verifyOwnershipAfterTransfer' function
   ],
   [
     restrictCallOperation,
     allowCallingAnyContractInstance,
-    interfaceIdOfPhygitalAsset, // contract must support the PhygitalAsset interface
+    INTERFACE_ID_OF_PHYGITAL_ASSET, // contract must support the PhygitalAsset interface
     PhygitalAssetInterface.getFunction("transfer")!.selector, // allow calling the 'transfer' function
   ],
 ];

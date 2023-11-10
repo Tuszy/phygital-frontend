@@ -15,4 +15,4 @@ export const LSP6KeyManagerInterface = new Interface(
 export const PhygitalAssetInterface = new Interface(PhygitalAssetArtifact.abi);
 
 // Constants
-export const interfaceIdOfPhygitalAsset = "0x5f5b600b";
+export const INTERFACE_ID_OF_PHYGITAL_ASSET = "0xcf06c304";

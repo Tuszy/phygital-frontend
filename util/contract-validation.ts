@@ -6,7 +6,7 @@ import {
   LSP0ERC725AccountInterface,
   LSP6KeyManagerInterface,
   PhygitalAssetInterface,
-  interfaceIdOfPhygitalAsset,
+  INTERFACE_ID_OF_PHYGITAL_ASSET,
 } from "./Interfaces";
 
 // Constants
@@ -70,7 +70,7 @@ export async function throwIfAddressIsNotAPhygitalAsset(
 
   try {
     const isPhygitalAsset = await phygitalAsset.supportsInterface(
-      interfaceIdOfPhygitalAsset
+      INTERFACE_ID_OF_PHYGITAL_ASSET
     );
     if (!isPhygitalAsset) throw new Error();
   } catch (e) {
