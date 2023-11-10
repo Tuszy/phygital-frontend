@@ -3,7 +3,7 @@ import { isAddress, Contract, Provider } from "ethers";
 
 // Interfaces
 import {
-  LSP0ERC725AccountABIInterface,
+  LSP0ERC725AccountInterface,
   LSP6KeyManagerInterface,
   PhygitalAssetInterface,
   interfaceIdOfPhygitalAsset,
@@ -24,7 +24,7 @@ export async function throwIfAddressIsNotAERC725Account(
 
   const erc725Account = new Contract(
     address,
-    LSP0ERC725AccountABIInterface,
+    LSP0ERC725AccountInterface,
     provider
   );
 

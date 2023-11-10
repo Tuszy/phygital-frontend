@@ -1,12 +1,12 @@
 // Crypto
-import { Contract, Provider, Signer } from "ethers";
+import { Contract, Signer } from "ethers";
 
 // ERC725
 import ERC725, { ERC725JSONSchema } from "@erc725/erc725.js";
 import LSP3ProfileMetadataSchema from "@erc725/erc725.js/schemas/LSP3ProfileMetadata.json";
 
 // Interfaces
-import { LSP0ERC725AccountABIInterface } from "./Interfaces";
+import { LSP0ERC725AccountInterface } from "./Interfaces";
 
 // Validation
 import { throwIfAddressIsNotAERC725Account } from "./contract-validation";
@@ -20,7 +20,7 @@ export class UniversalProfile {
   constructor(private signer: Signer, private universalProfileAddress: string) {
     this._up = new Contract(
       this.universalProfileAddress,
-      LSP0ERC725AccountABIInterface,
+      LSP0ERC725AccountInterface,
       this.signer
     );
 

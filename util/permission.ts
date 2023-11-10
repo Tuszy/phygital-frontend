@@ -50,3 +50,13 @@ export const permissionData = KeyManagerERC725.encodeData([
     value: allowedCallPermission,
   },
 ]);
+
+console.log("Permission data", permissionData);
+console.log(
+  "mint selector",
+  PhygitalAssetInterface.getFunction("mint")!.selector
+);
+console.log(
+  "verifyOwnershipAfterTransfer selector",
+  PhygitalAssetInterface.getFunction("verifyOwnershipAfterTransfer")!.selector
+);
