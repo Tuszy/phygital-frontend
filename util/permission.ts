@@ -35,6 +35,12 @@ const allowedCallPermission = [
     PhygitalAssetInterface.getFunction("verifyOwnershipAfterTransfer")!
       .selector, // allow calling the 'verifyOwnershipAfterTransfer' function
   ],
+  [
+    restrictCallOperation,
+    allowCallingAnyContractInstance,
+    interfaceIdOfPhygitalAsset, // contract must support the PhygitalAsset interface
+    PhygitalAssetInterface.getFunction("transfer")!.selector, // allow calling the 'transfer' function
+  ],
 ];
 
 export const permissionData = KeyManagerERC725.encodeData([
@@ -59,4 +65,8 @@ console.log(
 console.log(
   "verifyOwnershipAfterTransfer selector",
   PhygitalAssetInterface.getFunction("verifyOwnershipAfterTransfer")!.selector
+);
+console.log(
+  "transfer selector",
+  PhygitalAssetInterface.getFunction("transfer")!.selector
 );
