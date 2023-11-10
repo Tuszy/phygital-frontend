@@ -23,3 +23,4 @@ Controller: 0xAc11803507C05A21daAF9D354F7100B1dC9CD590
    4. allowedFunction: selectors of
       1. function **mint**(bytes32 phygitalId, uint phygitalIndex, bytes memory phygitalSignature, bytes32[] memory merkleProofOfCollection, bool force)
       2. function **verifyOwnershipAfterTransfer**(bytes32 phygitalId, bytes memory phygitalSignature)
+      3. function **transfer**(address from, address to, bytes32 tokenId, bool force, bytes memory data)
