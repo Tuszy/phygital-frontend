@@ -172,13 +172,7 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
     if (!provider.current) {
       if (window?.lukso === undefined) return;
       provider.current = new UniversalProfileExtension(window?.lukso);
-    } else {
-      return;
     }
-
-    return () => {
-      provider.current?.removeAllListeners("network");
-    };
   }, []);
 
   const value: EthersContextValue = useMemo<EthersContextValue>(
@@ -200,7 +194,11 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
 
 declare global {
   interface Window {
-    lukso: Eip1193Provider & { chainId: string };
+    lukso: Eip1193Provider & {
+      chainId: string;
+      on: (event: string, handler: () => void) => void;
+      removeAllListeners: (event: string) => void;
+    };
   }
 }
 
