@@ -16,7 +16,7 @@ export const KeyManagerERC725 = new ERC725(
   LSP6KeyManagerSchema as ERC725JSONSchema[]
 );
 
-const restrictCallOperation = "0x00000010"; // restriction 'call' operation
+const restrictCallOperation = "0x00000002"; // restriction 'call' operation
 const allowCallingAnyContractInstance =
   "0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"; // // allow calling any contract
 
