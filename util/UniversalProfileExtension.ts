@@ -12,7 +12,7 @@ export class UniversalProfileExtension extends BrowserProvider {
     this.lukso = Boolean(provider.isUniversalProfileExtension);
   }
 
-  public isUniversalProfileExtension() {
+  public get isUniversalProfileExtension() {
     return this.lukso;
   }
 

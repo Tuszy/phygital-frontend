@@ -19,17 +19,17 @@ import { Id, toast } from "react-toastify";
 import type { EthersContextValue } from "./EthersContext";
 import EthersContext from "./EthersContext";
 
-// Constants
-import { REQUESTING_PENDING, USER_REJECTED_REQUEST } from "./EthersConstants";
-
 // Lukso
 import { UniversalProfileExtension } from "@/util/UniversalProfileExtension";
 
 // Universal Profile
 import { UniversalProfile } from "@/util/UniversalProfile";
 
-const UP_BROWSER_EXTENSION_URL =
+// Constants
+export const UP_BROWSER_EXTENSION_URL =
   "https://docs.lukso.tech/guides/browser-extension/install-browser-extension/";
+export const REQUESTING_PENDING: number = -32002;
+export const USER_REJECTED_REQUEST: number = 4001;
 
 // Context Provider
 const EthersContextProvider = ({ children }: PropsWithChildren) => {
@@ -53,9 +53,9 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
   const clearError = () => showError(null);
 
   const requestingAccountSucceeded = async () => {
-    if (!provider.current) return;
+    if (!(await guard())) return;
 
-    const signer = await provider.current.getSigner();
+    const signer = await provider.current!.getSigner();
     const universalProfileAddress = await signer.getAddress();
     let universalProfile = new UniversalProfile(
       signer,
@@ -100,23 +100,14 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   const connectUniversalProfile = async () => {
-    if (loading) return;
-
-    if (!provider.current || !provider.current?.isUniversalProfileExtension()) {
-      showError(
-        <a href={UP_BROWSER_EXTENSION_URL} target="_blank">
-          Please download the Lukso UP browser extension.
-        </a>
-      );
-      return;
-    }
+    if (!(await guard())) return;
 
     clearError();
     setUniversalProfile(null);
     setLoading(true);
 
     try {
-      await provider.current.send("eth_requestAccounts", []);
+      await provider.current!.send("eth_requestAccounts", []);
       await requestingAccountSucceeded();
       setLoading(false);
     } catch (e: any) {
@@ -134,7 +125,7 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   const setPermissions = async () => {
-    if (!provider.current || !universalProfile || loading) return;
+    if (!(await guard())) return;
 
     setLoading(true);
     if (!(await universalProfile?.setNecessaryPermissions())) {
@@ -146,6 +137,36 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   const logout = async () => setUniversalProfile(null);
+
+  const guard = async () => {
+    if (!provider.current || !provider.current?.isUniversalProfileExtension) {
+      showError(
+        <a href={UP_BROWSER_EXTENSION_URL} target="_blank">
+          Please download the Lukso UP browser extension.
+        </a>
+      );
+      return false;
+    }
+    if (loading) return false;
+
+    const chainId = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID!);
+    if (!chainId) return false;
+
+    const chainIdAsHex = "0x" + chainId.toString(16);
+    if (chainIdAsHex.toLowerCase() === window.lukso.chainId) return true;
+
+    try {
+      console.log(chainId, chainIdAsHex);
+      await provider.current.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: chainIdAsHex }],
+      });
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
 
   useEffect(() => {
     if (!provider.current) {
@@ -179,7 +200,7 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
 
 declare global {
   interface Window {
-    lukso: Eip1193Provider;
+    lukso: Eip1193Provider & { chainId: string };
   }
 }
 
