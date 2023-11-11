@@ -10,6 +10,9 @@ import ERC725, { ERC725JSONSchema } from "@erc725/erc725.js";
 // Schema
 import LSP6KeyManagerSchema from "../schema/LSP6KeyManager.json";
 
+// Constants
+import { ERC725YDataKeys } from "@lukso/lsp-smart-contracts";
+
 const controllerKey = process.env.NEXT_PUBLIC_KEY as string;
 
 export const KeyManagerERC725 = new ERC725(
@@ -42,18 +45,28 @@ const allowedCallPermission = [
     PhygitalAssetInterface.getFunction("transfer")!.selector, // allow calling the 'transfer' function
   ],
 ];
+const allowedSetDataPermissions = [
+  ERC725YDataKeys.LSP12["LSP12IssuedAssets[]"].index,
+  ERC725YDataKeys.LSP12.LSP12IssuedAssetsMap,
+];
 
 export const permissionData = KeyManagerERC725.encodeData([
   {
     keyName: "AddressPermissions:Permissions:<address>",
     dynamicKeyParts: controllerKey,
-    value: KeyManagerERC725.encodePermissions({ CALL: true }),
+    value: KeyManagerERC725.encodePermissions({ CALL: true, SETDATA: true }),
   },
   {
     keyName: "AddressPermissions:AllowedCalls:<address>",
     dynamicKeyParts: controllerKey,
     // @ts-ignore
     value: allowedCallPermission,
+  },
+  {
+    keyName: "AddressPermissions:AllowedERC725YDataKeys:<address>",
+    dynamicKeyParts: controllerKey,
+    // @ts-ignore
+    value: allowedSetDataPermissions,
   },
 ]);
 

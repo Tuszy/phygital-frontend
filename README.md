@@ -16,6 +16,7 @@ Controller: 0xAc11803507C05A21daAF9D354F7100B1dC9CD590
 
 1. [AddressPermissions:Permissions](https://github.com/lukso-network/LIPs/blob/main/LSPs/LSP-6-KeyManager.md#addresspermissionspermissionsaddress)
    1. call
+   2. set data
 2. [AddressPermissions:AllowedCalls](https://github.com/lukso-network/LIPs/blob/main/LSPs/LSP-6-KeyManager.md#addresspermissionsallowedcallsaddress)
    1. restrictionOperations: call
    2. allowedAddress: all contract addresses (0xffffffffffffffffffffffffffffffffffffffff)
@@ -24,3 +25,6 @@ Controller: 0xAc11803507C05A21daAF9D354F7100B1dC9CD590
       1. function **mint**(address phygitalAddress, uint phygitalIndex, bytes memory phygitalSignature, bytes32[] memory merkleProofOfCollection, bool force)
       2. function **verifyOwnershipAfterTransfer**(address phygitalAddress, bytes memory phygitalSignature)
       3. function **transfer**(address from, address to, bytes32 tokenId, bool force, bytes memory data)
+3. [AddressPermissions:AllowedERC725YDataKeys](https://github.com/lukso-network/LIPs/blob/main/LSPs/LSP-6-KeyManager.md#addresspermissionsallowederc725ydatakeysaddress)
+   1. **LSP12IssuedAssets[]** - ERC725Y Key Prefix: 0x7c8c3416d6cda87cd42c71ea1843df28
+   2. **LSP12IssuedAssetsMap** - ERC725Y Key Prefix: 0x74ac2555c10b9349e78f0000 
