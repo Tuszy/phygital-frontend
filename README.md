@@ -21,6 +21,6 @@ Controller: 0xAc11803507C05A21daAF9D354F7100B1dC9CD590
    2. allowedAddress: all contract addresses (0xffffffffffffffffffffffffffffffffffffffff)
    3. allowedInterfaceId: Interface id of [PhygitalAsset contract](https://github.com/Tuszy/phygital-smart-contract/blob/main/contracts/PhygitalAsset.sol) (see [_INTERFACEID_PHYGITAL_ASSET](https://github.com/Tuszy/phygital-smart-contract/blob/main/contracts/PhygitalAssetConstants.sol))
    4. allowedFunction: selectors of
-      1. function **mint**(bytes32 phygitalId, uint phygitalIndex, bytes memory phygitalSignature, bytes32[] memory merkleProofOfCollection, bool force)
-      2. function **verifyOwnershipAfterTransfer**(bytes32 phygitalId, bytes memory phygitalSignature)
+      1. function **mint**(address phygitalAddress, uint phygitalIndex, bytes memory phygitalSignature, bytes32[] memory merkleProofOfCollection, bool force)
+      2. function **verifyOwnershipAfterTransfer**(address phygitalAddress, bytes memory phygitalSignature)
       3. function **transfer**(address from, address to, bytes32 tokenId, bool force, bytes memory data)
