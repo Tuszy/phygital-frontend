@@ -6,7 +6,7 @@ import Menu from "./Menu";
 
 export default function Home() {
   return (
-    <main className="[min-height:100dvh] w-full flex flex-col items-center justify-start bg-[url('/background.svg')] bg-no-repeat bg-top">
+    <main className="[min-height:100dvh] w-full flex flex-col items-center justify-start bg-[url('/background.svg')] bg-no-repeat bg-top bg-cover">
       <Image
         draggable={false}
         src="/logo.png"
