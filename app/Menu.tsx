@@ -24,7 +24,7 @@ export default function Menu() {
     universalProfile &&
     setQRCodeData({
       text: "Universal Profile Address",
-      data: universalProfile!.address,
+      data: `ethereum:${universalProfile!.address}@${process.env.CHAIN_ID}`,
     });
   const showAppDownloadLinkQRCode = () =>
     setQRCodeData({
