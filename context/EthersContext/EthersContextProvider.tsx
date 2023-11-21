@@ -11,6 +11,7 @@ import React, {
 
 // Crypto
 import { Eip1193Provider, hashMessage } from "ethers";
+import { SiweMessage } from "siwe";
 
 // React Toast
 import { Id, toast } from "react-toastify";
@@ -152,10 +153,18 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
         return null;
       }
 
-      const message =
-        "I want to create a QR Code to login into the Phygital app.";
-      const hash = hashMessage(message);
-      const signature = await signer.signMessage(message);
+      const siweMessage = new SiweMessage({
+        domain: window.location.host,
+        address: universalProfile.address,
+        statement: "I want to create a QR Code to login into the Phygital app.",
+        uri: window.location.origin,
+        version: "1",
+        chainId: parseInt(process.env.NEXT_PUBLIC_CHAIN_ID!),
+        resources: ["https://phygital.tuszy.com"],
+      }).prepareMessage();
+      const hash = hashMessage(siweMessage);
+
+      const signature = await signer.signMessage(siweMessage);
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/login`,
