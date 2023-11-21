@@ -33,7 +33,7 @@ export default function QRCode({
         <div className="text-white w-full flex-center font-bold text-3xl text-center">
           {text}
         </div>
-        <div className="bg-white h-80 w-80 rounded-xl ring-4 ring-offset-2 ring-slate-300 grid place-content-center overflow-hidden">
+        <div className="bg-white h-[380px] w-[380px] rounded-xl ring-4 ring-offset-2 ring-slate-300 grid place-content-center overflow-hidden">
           <canvas id="qr-code-canvas"></canvas>
         </div>
       </div>
