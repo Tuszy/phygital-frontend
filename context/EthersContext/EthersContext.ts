@@ -15,6 +15,7 @@ export interface EthersContextValue {
   connectUniversalProfile: () => Promise<void>;
   setPermissions: () => Promise<void>;
   logout: () => Promise<void>;
+  login: () => Promise<string | null>;
   loading: boolean;
 }
 
@@ -24,6 +25,7 @@ const EthersContext = createContext<EthersContextValue>({
   connectUniversalProfile: async () => {},
   setPermissions: async () => {},
   logout: async () => {},
+  login: async () => null,
   loading: false,
 });
 

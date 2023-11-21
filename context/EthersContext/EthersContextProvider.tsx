@@ -10,7 +10,7 @@ import React, {
 } from "react";
 
 // Crypto
-import { Eip1193Provider } from "ethers";
+import { Eip1193Provider, hashMessage } from "ethers";
 
 // React Toast
 import { Id, toast } from "react-toastify";
@@ -136,6 +136,55 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
     setLoading(false);
   };
 
+  const login = async (): Promise<string | null> => {
+    if (!(await guard())) return null;
+
+    if (!universalProfile?.hasPermissions) {
+      showError(
+        "Please set the permissions first before creating the app login qr code"
+      );
+      return null;
+    }
+
+    try {
+      const signer = await provider.current?.getSigner();
+      if (!signer) {
+        return null;
+      }
+
+      const message =
+        "I want to create a QR Code to login into the Phygital app.";
+      const hash = hashMessage(message);
+      const signature = await signer.signMessage(message);
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            universal_profile_address: universalProfile!.address,
+            signature,
+            hash,
+          }),
+        }
+      );
+
+      if (response.status !== 200) throw new Error("Login request failed");
+      const json = await response.json();
+      if (!Boolean(json.token)) throw new Error("Invalid login response");
+
+      return json.token ?? null;
+    } catch (e: any) {
+      console.error(`❌ signing login message failed: `, e.message);
+      showError("Failed to create the QR Code for the app login");
+    }
+
+    return null;
+  };
+
   const logout = async () => setUniversalProfile(null);
 
   const guard = async () => {
@@ -181,6 +230,7 @@ const EthersContextProvider = ({ children }: PropsWithChildren) => {
       universalProfile,
       connectUniversalProfile,
       setPermissions,
+      login,
       logout,
       loading,
     }),

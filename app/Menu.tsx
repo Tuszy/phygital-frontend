@@ -20,11 +20,13 @@ export default function Menu() {
   const { universalProfile } = useContext(EthersContext);
 
   const onHideQRCode = () => setQRCodeData(null);
-  const showUniversalProfileQRCode = () =>
+  const showUniversalProfileQRCode = (jwt: String) =>
     universalProfile &&
     setQRCodeData({
-      text: "Universal Profile Address",
-      data: `ethereum:${universalProfile!.address}@${process.env.CHAIN_ID}`,
+      text: "App Login",
+      data: `ethereum:${universalProfile!.address}@${
+        process.env.CHAIN_ID
+      }:${jwt}`,
     });
   const showAppDownloadLinkQRCode = () =>
     setQRCodeData({
