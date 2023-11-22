@@ -79,10 +79,10 @@ export class UniversalProfile {
       const data = await this._up["getDataBatch(bytes32[])"](
         permissionData.keys
       );
-      const decodedPermissions = KeyManagerERC725.decodePermissions(data[0]);
       const allowedCall = ((data[1] as string) ?? "").toLowerCase();
       this._hasPermissions =
-        decodedPermissions.CALL && permissionData.values[1] === allowedCall;
+        KeyManagerERC725.checkPermissions(permissionData.values[0], data[0]) &&
+        permissionData.values[1] === allowedCall;
     } catch (e) {
       console.error(e);
       this._hasPermissions = false;
