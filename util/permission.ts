@@ -54,7 +54,11 @@ export const permissionData = KeyManagerERC725.encodeData([
   {
     keyName: "AddressPermissions:Permissions:<address>",
     dynamicKeyParts: controllerKey,
-    value: KeyManagerERC725.encodePermissions({ CALL: true, SETDATA: true }),
+    value: KeyManagerERC725.encodePermissions({
+      EXECUTE_RELAY_CALL: true,
+      CALL: true,
+      SETDATA: true,
+    }),
   },
   {
     keyName: "AddressPermissions:AllowedCalls:<address>",
