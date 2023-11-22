@@ -8,7 +8,7 @@ import EthersContext from "@/context/EthersContext/EthersContext";
 import LoginButton from "./LoginButton";
 import SetPermissionsButton from "./SetPermissionsButton";
 import LogoutButton from "./LogoutButton";
-import DownloadAppButton from "./DownloadAppButton";
+import AppLoginCodeButton from "./AppLoginCodeButton";
 import Profile from "./Profile";
 import QRCode from "./QRCode";
 
@@ -20,18 +20,20 @@ export default function Menu() {
   const { universalProfile } = useContext(EthersContext);
 
   const onHideQRCode = () => setQRCodeData(null);
-  const showUniversalProfileQRCode = (jwt: String) =>
+  const showUniversalProfileQRCode = () =>
+    universalProfile &&
+    setQRCodeData({
+      text: "Universal Profile Address",
+      data: `ethereum:${universalProfile!.address}@${process.env.CHAIN_ID}`,
+    });
+
+  const showUniversalProfileLoginQRCode = (jwt: String) =>
     universalProfile &&
     setQRCodeData({
       text: "App Login",
       data: `ethereum:${universalProfile!.address}@${
         process.env.CHAIN_ID
       }:${jwt}`,
-    });
-  const showAppDownloadLinkQRCode = () =>
-    setQRCodeData({
-      text: "App Download",
-      data: "https://phygital-app.tuszy.com",
     });
 
   return (
@@ -44,7 +46,9 @@ export default function Menu() {
           {!universalProfile?.hasPermissions ? (
             <SetPermissionsButton />
           ) : (
-            <DownloadAppButton onShowQRCode={showAppDownloadLinkQRCode} />
+            <AppLoginCodeButton
+              onShowQRCode={showUniversalProfileLoginQRCode}
+            />
           )}
           <LogoutButton />
           {qrCodeData && <QRCode {...qrCodeData} onClose={onHideQRCode} />}

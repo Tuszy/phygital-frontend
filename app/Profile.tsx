@@ -9,29 +9,22 @@ import EthersContext from "@/context/EthersContext/EthersContext";
 export default function Profile({
   onShowQRCode,
 }: {
-  onShowQRCode: (jwt: string) => void;
+  onShowQRCode: () => void;
 }) {
-  const { universalProfile, login, loading } = useContext(EthersContext);
-
-  const onCreateLoginQrCode = async () => {
-    if (loading) return;
-    const jwt = await login();
-    if (jwt == null) return;
-    onShowQRCode(jwt!);
-  };
+  const { universalProfile } = useContext(EthersContext);
 
   return (
     <div className="text-2xl w-full flex flex-col items-center gap-4 font-black tracking-widest [-webkit-text-stroke:_1px_#0ff] [-webkit-text-fill-color:_white] font-mono drop-shadow-[0_0_12px_#00ffff] select-none">
       <div
         title={universalProfile?.address}
         className="cursor-pointer"
-        onClick={onCreateLoginQrCode}
+        onClick={onShowQRCode}
       >
         {universalProfile?.nameWithAddress}
       </div>
       {Boolean(universalProfile?.data?.profileImage?.length > 0) && (
         <Image
-          onClick={onCreateLoginQrCode}
+          onClick={onShowQRCode}
           draggable={false}
           src={universalProfile?.data?.profileImage[0].url}
           width={100}
