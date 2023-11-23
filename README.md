@@ -18,9 +18,17 @@ ethereum:<up_address>@<chain_id>:<jwt>
 # Simple Workflow
 
 1. Login with Universal Profile
+   ![login](screenshots/1.png)
+   ![login2](screenshots/2.png)
+   ![login3](screenshots/3.png)
 2. Set Permissions
+   ![setpermissions](screenshots/4.png)
+   ![setpermissions](screenshots/5.png)
+   ![setpermissions](screenshots/6.png)
 3. Create **App Login QR Code**
-4. Scan **App Login QR Code**
+   ![setpermissions](screenshots/8.png)
+   ![setpermissions](screenshots/9.png)
+4. Scan **App Login QR Code** with [Phygital app](https://github.com/Tuszy/phygital-app)
 5. Done
 
 # Set Permissions
