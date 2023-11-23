@@ -1,3 +1,7 @@
+<p align="center">
+<img src="screenshots/mockup.png" align="center" height="350px">
+</p>
+
 # Phygital Frontend
 
 Web frontend is used for adding a controller with specific permissions to the key manager of the universal profile allowing better ux within the [phygital app](https://github.com/Tuszy/phygital-app). Furthermore it is using [**Log-In With UP**](https://docs.lukso.tech/learn/dapp-developer/siwe/) to send a signature to the [Backend](https://github.com/Tuszy/phygital-backend) which in exchange sends a [JWT](https://jwt.io/) (valid for 24 hours) to create an **App Login QR Code**.
