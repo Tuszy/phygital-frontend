@@ -29,9 +29,8 @@ ethereum:<up_address>@<chain_id>:<jwt>
    ![create app login qr code 1](screenshots/8.png)
    ![create app login qr code 2](screenshots/9.png)
 4. Scan **App Login QR Code** with [Phygital app](https://github.com/Tuszy/phygital-app)
-<img src="screenshots/10.png" height="500">
-<img src="screenshots/11.png" height="500">
-5. Done
+<br/>    <img src="screenshots/10.png" height="500"> <img src="screenshots/11.png" height="500">
+6. Done
 
 # Set Permissions
 
